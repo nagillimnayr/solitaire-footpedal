@@ -4,6 +4,4 @@ https://kenney.nl/assets/casino-audio (Card sound effects)
 
 https://gx310.itch.io/pxiel-art-ui-borders (Borders for card slots)
 
-https://wishforge.itch.io/gdevelop-animated-buttons-example (Animated Buttons)
-
 https://kenney-assets.itch.io/board-game-icons (icons)
