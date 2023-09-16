@@ -65,7 +65,8 @@ public class UIManager : MonoBehaviour
         ShowPauseScreen(false);
         // ShowAutoPlay(false);
         ShowNoMovesLeft(false);
-        ShowInputMode(false);
+        // ShowInputMode(false);
+        ShowInputMode(true);
         
     }
 
