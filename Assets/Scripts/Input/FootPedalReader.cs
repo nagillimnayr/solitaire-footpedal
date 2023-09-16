@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO.Ports;
 
 public class FootPedalReader : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class FootPedalReader : MonoBehaviour
      * either a successful connection is made, or a limit is reached. */
     private const int numOfPortsToTry = 9;
     [SerializeField] public static string portNamePrefix = "COM";
-    private static int portNum = 1;  // COM port to try
+    private static int portNum = 3;  // COM port to try
 
     public static Queue<int> inputQueue { get; private set; } = null;
     public const int QueueCapacity = 5;
@@ -45,6 +46,11 @@ public class FootPedalReader : MonoBehaviour
     
     private void Awake()
     {
+        string[] ports = SerialPort.GetPortNames();
+        foreach(string portName in ports) {
+            Debug.Log("port: " + portName);
+        }
+
         // To prevent multiple instances of the class existing, delete this object if it is not 
         // the static global instance
         if (Instance != null && Instance != this)
