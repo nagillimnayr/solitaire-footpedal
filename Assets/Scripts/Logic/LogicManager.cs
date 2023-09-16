@@ -22,6 +22,8 @@ public class LogicManager : MonoBehaviour
     //public bool isTurnThree { get; private set; } = true;
     [SerializeField] public static GameMode gameMode = GameMode.TurnOne;
 
+    [SerializeField] private static Foundation[] foundations = new Foundation[4];
+
     
     static CardSound sound;
 
@@ -49,8 +51,15 @@ public class LogicManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foundations[0] = GameObject.Find("Foundation_Pile_Diamonds").GetComponent<Foundation>();
+        foundations[1] = GameObject.Find("Foundation_Pile_Clubs").GetComponent<Foundation>();
+        foundations[2] = GameObject.Find("Foundation_Pile_Hearts").GetComponent<Foundation>();
+        foundations[3] = GameObject.Find("Foundation_Pile_Spades").GetComponent<Foundation>();
+
         // Start Calibration
         // EventManager.Trigger("Calibrate");
+        
+        StartGame();
     }
 
     // Update is called once per frame
@@ -73,7 +82,8 @@ public class LogicManager : MonoBehaviour
 
     private static void StartGame()
     {
-        //EventManager.Trigger("StartGame");
+        Debug.Log("LogicManager.StartGame()");
+        // EventManager.Trigger("StartGame");
         Deck.Instance.StartGame();
     }
     
@@ -108,6 +118,18 @@ public class LogicManager : MonoBehaviour
         Deck.Instance.StartGame();
     }
 
+    public static void CheckForWin() 
+    {
+        if(
+            foundations[0].IsFull() &&
+            foundations[1].IsFull() &&
+            foundations[2].IsFull() &&
+            foundations[3].IsFull()
+        )
+        {
+            WinGame();
+        }
+    }
     public static void WinGame()
     {
         isWon = true;
