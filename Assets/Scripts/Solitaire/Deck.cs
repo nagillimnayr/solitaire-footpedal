@@ -16,7 +16,7 @@ public class Deck : MonoBehaviour
     // Deck
     private static List<GameObject> deckOfCards = new List<GameObject>(52); // List of playing card objects 
     public static Stack<GameObject> shuffledDeck { private set; get; } = new Stack<GameObject>(52); // Stack to hold the the cards after being shuffled
-    // Stack data structure because only the top card should be accesible
+    // Stack data structure because only the top card should be accessible
 
     // References
     [SerializeField] public GameObject playingCard; // Reference to playingCard prefab
@@ -126,6 +126,7 @@ public class Deck : MonoBehaviour
     // Starts the game
     public void StartGame()
     {
+        Debug.Log("> Deck.StartGame()");
         StartCoroutine(ReturnAllToDeck()); // Return all cards to deck
         StartCoroutine(ShuffleDeck()); // Shuffle the deck
         StartCoroutine(DealCards()); // Deal out the cards
@@ -233,12 +234,12 @@ public class Deck : MonoBehaviour
             yield break;
         }
 
-        //Debug.Log("> Drawing Card!");
+        // Debug.Log("> Drawing Card!");
         isDrawingCard = true;
 
         // Get reference to card being drawn and pop from stack
         GameObject card = shuffledDeck.Pop();
-        // Move card up to avoid collison
+        // Move card up to avoid collision
         card.transform.position += new Vector3(0.0f, 0.0f, -50.0f); 
         // Add card to Waste pile
         Waste.Instance.AddToPile(card);
@@ -272,7 +273,7 @@ public class Deck : MonoBehaviour
             yield break;
         }
 
-        //Debug.Log("> Drawing Cards!");
+        // Debug.Log("> Drawing Cards!");
         isDrawingCard = true;
 
         StartCoroutine(Waste.Instance.Condense()); // Condense the Waste pile
@@ -397,7 +398,7 @@ public class Deck : MonoBehaviour
     // Returns all cards to the deck
     public IEnumerator ReturnAllToDeck()
     {
-        //UnityEngine.Debug.Log("> Returning all cards to deck!");
+        UnityEngine.Debug.Log("> Returning all cards to deck!");
 
         // Wait until other operations have finished
         while(isShuffling || isReturningCards || isDrawingCard || isDealingCards)
@@ -837,4 +838,3 @@ public class Deck : MonoBehaviour
         yield break;
     }
 }
-
