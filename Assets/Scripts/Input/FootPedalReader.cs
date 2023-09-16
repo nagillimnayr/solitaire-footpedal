@@ -130,7 +130,7 @@ public class FootPedalReader : MonoBehaviour
         // Concatenate port name prefix with the port number that we are trying
         string portName = portNamePrefix + portNum.ToString();
 
-        //Debug.Log("Attempting to connect to: " + portName);
+        Debug.Log("Attempting to connect to: " + portName);
         
         // Set the serial controller's port name
         serialController.portName = portName;
@@ -218,11 +218,14 @@ public class FootPedalReader : MonoBehaviour
         ConnectionUI.ConnectingText.SetActive(false);
         ConnectionUI.ConnectionFailedText.SetActive(false);
         ConnectionUI.ConnectionSuccessText.SetActive(true);
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
         isConnected = true;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         ConnectionUI.ConnectionSuccessText.SetActive(false);
         ConnectionUI.ConnectingScreen.SetActive(false);
+
+        // Trigger Start Game event.
+        EventManager.Trigger("Connection Success");
     }
 
     IEnumerator ConnectionFailed()
@@ -230,7 +233,7 @@ public class FootPedalReader : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         ConnectionUI.ConnectionFailedText.SetActive(false);
         ConnectionUI.ConnectingScreen.SetActive(false);
-        EventManager.Trigger("NoConnection");
+        EventManager.Trigger("Connection Fail");
     }
 
     // Poll Serial Controller for message
