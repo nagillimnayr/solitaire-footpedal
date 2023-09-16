@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour
     [Serialize] public bool inputLocked  = false;
     [Serialize] public bool isPointerDown { get; private set; } = false;
 
-    [Serialize] public static InputMode inputMode { get; private set; } = InputMode.FootPedal; // To control whether input should be
+    [Serialize] public static InputMode inputMode { get; private set; } = InputMode.Mouse; // To control whether input should be
                                                                             // accepted from the pedal or the mouse for
                                                                             // drawing cards
 
@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime; // Increase timer
-        
+        ProcessInput();
         /*// Check if new input may be processed
         if (!Good()) return;
         
@@ -164,7 +164,7 @@ public class InputManager : MonoBehaviour
         // Returns true reading input is allowed
         // Returns false if input should be locked until some other task is complete
         
-        // Dont process input if cards are being dealt or drawn or dropped
+        // Don't process input if cards are being dealt or drawn or dropped
         if (
             inputLocked
             || LogicManager.isPaused
