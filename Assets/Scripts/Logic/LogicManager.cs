@@ -142,9 +142,9 @@ public class LogicManager : MonoBehaviour
     
     public void AutoPlay()
     {
-        isAutoPlayOn = true; // Set bool
-        UIManager.ShowAutoPlay(true); // Show text
-        StartCoroutine(Deck.Instance.AutoPlay()); // Start AutoPlay
+        // isAutoPlayOn = true; // Set bool
+        // UIManager.ShowAutoPlay(true); // Show text
+        // StartCoroutine(Deck.Instance.AutoPlay()); // Start AutoPlay
     }
 
     public static void StopAutoPlay()

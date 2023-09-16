@@ -479,18 +479,18 @@ public class Deck : MonoBehaviour
     // Check all Tableau piles to see if they have any face down cards left
     public void CheckForAutoWin()
     {
-        if(!LogicManager.debugMode && !LogicManager.isAutoPlayAllowed ) return;
-        for (int i = 0; i < tableauPiles.Count; i++)
-        {
-            Tableau tableau = tableauPiles[i].GetComponent<Tableau>();
-            if (tableau.faceDownPile.Count > 0)
-            {
-                // If any Tableau piles still have face down cards, game has not been won
-                return;
-            }
-        }
-        // If no face down cards were found, game has been won
-        AutoWinGame();
+        // if(!LogicManager.debugMode && !LogicManager.isAutoPlayAllowed ) return;
+        // for (int i = 0; i < tableauPiles.Count; i++)
+        // {
+        //     Tableau tableau = tableauPiles[i].GetComponent<Tableau>();
+        //     if (tableau.faceDownPile.Count > 0)
+        //     {
+        //         // If any Tableau piles still have face down cards, game has not been won
+        //         return;
+        //     }
+        // }
+        // // If no face down cards were found, game has been won
+        // AutoWinGame();
     }
 
     public void AutoWinGame()
