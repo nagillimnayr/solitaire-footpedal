@@ -82,7 +82,15 @@ public class Foundation : MonoBehaviour
         else
             StartCoroutine(PlaySuccessSound());
 
+        if(IsFull()) {
+            LogicManager.CheckForWin();
+        }
         return true; // Return true to indicate move was valid
+    }
+
+    public bool IsFull() 
+    {
+        return pile.Count == 13;
     }
 
     IEnumerator PlaySuccessSound()
