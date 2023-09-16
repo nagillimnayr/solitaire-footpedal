@@ -126,7 +126,7 @@ public class Deck : MonoBehaviour
     // Starts the game
     public void StartGame()
     {
-        Debug.Log("> Deck.StartGame()");
+        // Debug.Log("> Deck.StartGame()");
         StartCoroutine(ReturnAllToDeck()); // Return all cards to deck
         StartCoroutine(ShuffleDeck()); // Shuffle the deck
         StartCoroutine(DealCards()); // Deal out the cards
@@ -398,7 +398,7 @@ public class Deck : MonoBehaviour
     // Returns all cards to the deck
     public IEnumerator ReturnAllToDeck()
     {
-        UnityEngine.Debug.Log("> Returning all cards to deck!");
+        // Debug.Log("> Returning all cards to deck!");
 
         // Wait until other operations have finished
         while(isShuffling || isReturningCards || isDrawingCard || isDealingCards)
