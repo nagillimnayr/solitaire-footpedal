@@ -22,7 +22,7 @@ public class LogicManager : MonoBehaviour
     //public bool isTurnThree { get; private set; } = true;
     [SerializeField] public static GameMode gameMode = GameMode.TurnOne;
 
-    [SerializeField] private static Foundation[] foundations = new Foundation[4];
+    private static Foundation[] foundations = new Foundation[4];
 
     
     static CardSound sound;
@@ -45,7 +45,9 @@ public class LogicManager : MonoBehaviour
         // Setup events
         // EventManager.AddListener("CalibrationComplete", StartGame);
         
-        EventManager.AddListener("NoConnection", StartGame);
+        EventManager.AddListener("Connection Success", StartGame);
+        EventManager.AddListener("Connection Fail", StartGame);
+        EventManager.AddListener("Start Game", StartGame);
     }
     
     // Start is called before the first frame update
@@ -58,8 +60,7 @@ public class LogicManager : MonoBehaviour
 
         // Start Calibration
         // EventManager.Trigger("Calibrate");
-        
-        StartGame();
+
     }
 
     // Update is called once per frame
