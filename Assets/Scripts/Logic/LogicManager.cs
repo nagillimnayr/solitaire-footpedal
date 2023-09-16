@@ -41,7 +41,7 @@ public class LogicManager : MonoBehaviour
         sound = GetComponent<CardSound>();
         
         // Setup events
-        EventManager.AddListener("CalibrationComplete", StartGame);
+        // EventManager.AddListener("CalibrationComplete", StartGame);
         
         EventManager.AddListener("NoConnection", StartGame);
     }
@@ -50,7 +50,7 @@ public class LogicManager : MonoBehaviour
     void Start()
     {
         // Start Calibration
-        EventManager.Trigger("Calibrate");
+        // EventManager.Trigger("Calibrate");
     }
 
     // Update is called once per frame
@@ -132,7 +132,6 @@ public class LogicManager : MonoBehaviour
 
     public static void NoMovesLeft()
     {
-        StopAutoPlay();
         UIManager.ShowNoMovesLeft(true);
         sound.PlaySound("negative");
     }

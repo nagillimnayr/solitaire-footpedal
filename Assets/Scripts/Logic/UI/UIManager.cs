@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     // References
     //[FormerlySerializedAs("input")] public InputManager inputManager = null;
     public static TextMeshProUGUI MovesText { get; private set; } // Moves counter text
-    public static GameObject AutoPlayText { get; private set; } // Moves counter text
+    // public static GameObject AutoPlayText { get; private set; } // Moves counter text
     public static GameObject NoMovesLeftText { get; private set; } // No moves left text
     public static GameObject WinScreen { get; private set; } // Win Screen
     public static GameObject PauseScreen { get; private set; } // Pause Screen
@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
         //inputManager = GameObject.Find("Input Manager").GetComponent<InputManager>();
         
         MovesText = GameObject.Find("Text_Moves (TMP)").GetComponent<TextMeshProUGUI>();
-        AutoPlayText = GameObject.Find("Text_AutoPlay (TMP)");
+        // AutoPlayText = GameObject.Find("Text_AutoPlay (TMP)");
         NoMovesLeftText = GameObject.Find("Text_NoMovesLeft (TMP)");
         WinScreen = GameObject.Find("GameWon_Screen");
         PauseScreen = GameObject.Find("Pause_Screen");
@@ -63,7 +63,7 @@ public class UIManager : MonoBehaviour
         UpdateInputModeText();
         ShowWinScreen(false);
         ShowPauseScreen(false);
-        ShowAutoPlay(false);
+        // ShowAutoPlay(false);
         ShowNoMovesLeft(false);
         ShowInputMode(false);
         
@@ -86,11 +86,11 @@ public class UIManager : MonoBehaviour
 
     public static void ShowAutoPlay(bool show)
     {
-        AutoPlayText.SetActive(show);
+        // AutoPlayText.SetActive(show);
     }
     public static void ShowNoMovesLeft(bool show)
     {
-        NoMovesLeftText.SetActive(show);
+        // NoMovesLeftText.SetActive(show);
     }
 
     public static void ShowInputMode(bool show)

@@ -69,7 +69,7 @@ public class FootPedalReader : MonoBehaviour
         isConnected = false;
         
         // Setup events
-        EventManager.AddListener("Calibrate", Calibrate);
+        // EventManager.AddListener("Calibrate", Calibrate);
     }
 
     // Start is called before the first frame update
@@ -87,7 +87,7 @@ public class FootPedalReader : MonoBehaviour
         // If serial controller is inactive, do nothing
         if (!serialController) return;
         // If calibrating, do nothing
-        if (isCalibrating) return;
+        // if (isCalibrating) return;
 
         if (isConnected)
         {
@@ -265,7 +265,7 @@ public class FootPedalReader : MonoBehaviour
         }
     }
 
-    
+    /*
     private void Calibrate()
     {
         isCalibrating = true;
@@ -276,7 +276,9 @@ public class FootPedalReader : MonoBehaviour
         Debug.Log("> Calibrating...");
         StartCoroutine(GetBaseline());
     }
-    
+    */
+
+    /*
     // Determine the average reading when foot is down
     IEnumerator GetBaseline()
     {
@@ -331,99 +333,100 @@ public class FootPedalReader : MonoBehaviour
         BaselineUI.BaselineScreen.SetActive(false);
         yield break;
     }
+    */
     
     // Get average of max distance readings to determine upper and lower thresholds
-    IEnumerator CalibrateThreshold()
-    {
-        // Activate Calibration Screen
-        CalibrationUI.CalibrationScreen.SetActive(true);
+    // IEnumerator CalibrateThreshold()
+    // {
+    //     // Activate Calibration Screen
+    //     CalibrationUI.CalibrationScreen.SetActive(true);
         
-        const int MAX_NUM_OF_READINGS = 2;
-        int numOfReadings = 0;
+    //     const int MAX_NUM_OF_READINGS = 2;
+    //     int numOfReadings = 0;
         
-        int[] maxReadings = new int[MAX_NUM_OF_READINGS];
-        int maxReading = 0;
-        int buffer = maxBaselineReading - baseline; // To account for variations in the readings
-        int prevLowerReading = 0; // To record the reading when the user lowers their foot, to prevent immediately registering it as a new attempt
+    //     int[] maxReadings = new int[MAX_NUM_OF_READINGS];
+    //     int maxReading = 0;
+    //     int buffer = maxBaselineReading - baseline; // To account for variations in the readings
+    //     int prevLowerReading = 0; // To record the reading when the user lowers their foot, to prevent immediately registering it as a new attempt
 
-        while (numOfReadings < MAX_NUM_OF_READINGS)
-        {
-            // Update text
-            CalibrationUI.CalibrationNumOfReadingsText.text = (numOfReadings).ToString() + " of " + MAX_NUM_OF_READINGS.ToString();
-            CalibrationUI.CalibrationCurrentReadingText.text = maxReading.ToString();
+    //     while (numOfReadings < MAX_NUM_OF_READINGS)
+    //     {
+    //         // Update text
+    //         CalibrationUI.CalibrationNumOfReadingsText.text = (numOfReadings).ToString() + " of " + MAX_NUM_OF_READINGS.ToString();
+    //         CalibrationUI.CalibrationCurrentReadingText.text = maxReading.ToString();
             
-            /*// Get message from serial controller
-            string message = serialController.ReadSerialMessage();
-            int distance = 0;*/
+    //         /*// Get message from serial controller
+    //         string message = serialController.ReadSerialMessage();
+    //         int distance = 0;*/
 
-            // Get average measurement
-            for (int i = 0; i < QueueCapacity; i++)
-            {
-                ReadMessage();
-            }
-            int distance = ProcessInputQueue();
+    //         // Get average measurement
+    //         for (int i = 0; i < QueueCapacity; i++)
+    //         {
+    //             ReadMessage();
+    //         }
+    //         int distance = ProcessInputQueue();
             
-            // Attempt to convert to an int
-            //if (int.TryParse(message, out distance) && distance != 0)
-            if (distance != 0)
-            {
-                // If conversion was successful, check it against the max reading
-                if (distance > maxReading 
-                    && distance > maxBaselineReading + buffer // Make sure the reading is above the baseline
-                    && (prevLowerReading == 0 || distance > prevLowerReading + buffer)
-                )
-                {
-                    maxReading = distance;
-                }
-                // If foot has been lowered back down, then this attempt is over
-                else if(distance < maxBaselineReading
-                        && maxReading > maxBaselineReading + buffer  // Make sure the max reading is above the baseline 
-                        && distance < maxReading - buffer // Make sure distance has dropped beneath maxReading
-                        )   
-                {
-                    // Record max reading for this attempt
-                    maxReadings[numOfReadings] = maxReading;
-                    numOfReadings++;
-                    prevLowerReading = distance;
-                    Debug.Log("> Max Reading" + numOfReadings.ToString() + ": " + maxReading.ToString());
-                    maxReading = 0; // Reset max reading
-                    yield return new WaitForSeconds(2.0f); // Wait a bit before starting next attempt
-                }
-            }
-            yield return new WaitForSeconds(0.1f);
-        }
+    //         // Attempt to convert to an int
+    //         //if (int.TryParse(message, out distance) && distance != 0)
+    //         if (distance != 0)
+    //         {
+    //             // If conversion was successful, check it against the max reading
+    //             if (distance > maxReading 
+    //                 && distance > maxBaselineReading + buffer // Make sure the reading is above the baseline
+    //                 && (prevLowerReading == 0 || distance > prevLowerReading + buffer)
+    //             )
+    //             {
+    //                 maxReading = distance;
+    //             }
+    //             // If foot has been lowered back down, then this attempt is over
+    //             else if(distance < maxBaselineReading
+    //                     && maxReading > maxBaselineReading + buffer  // Make sure the max reading is above the baseline 
+    //                     && distance < maxReading - buffer // Make sure distance has dropped beneath maxReading
+    //                     )   
+    //             {
+    //                 // Record max reading for this attempt
+    //                 maxReadings[numOfReadings] = maxReading;
+    //                 numOfReadings++;
+    //                 prevLowerReading = distance;
+    //                 Debug.Log("> Max Reading" + numOfReadings.ToString() + ": " + maxReading.ToString());
+    //                 maxReading = 0; // Reset max reading
+    //                 yield return new WaitForSeconds(2.0f); // Wait a bit before starting next attempt
+    //             }
+    //         }
+    //         yield return new WaitForSeconds(0.1f);
+    //     }
         
-        // Calculate average of attempts
-        int sum = 0;
-        for (int i = 0; i < numOfReadings; i++)
-        {
-            sum += maxReadings[i] - baseline;
-        }
+    //     // Calculate average of attempts
+    //     int sum = 0;
+    //     for (int i = 0; i < numOfReadings; i++)
+    //     {
+    //         sum += maxReadings[i] - baseline;
+    //     }
 
-        //int average = sum / numOfReadings;
-        int average = sum / numOfReadings;
+    //     //int average = sum / numOfReadings;
+    //     int average = sum / numOfReadings;
         
-        // Set thresholds
-        UpperThreshold = (int)(average * upperThresholdRatio);
-        LowerThreshold = (int)(average * lowerThresholdRatio);
+    //     // Set thresholds
+    //     UpperThreshold = (int)(average * upperThresholdRatio);
+    //     LowerThreshold = (int)(average * lowerThresholdRatio);
         
-        Debug.Log("> Calibration Complete.");
-        Debug.Log("> Baseline: " + baseline.ToString());
-        Debug.Log("> Max Baseline Reading: " + maxBaselineReading.ToString());
-        Debug.Log("> UpperThreshold: " + UpperThreshold.ToString());
-        Debug.Log("> LowerThreshold: " + LowerThreshold.ToString());
+    //     Debug.Log("> Calibration Complete.");
+    //     Debug.Log("> Baseline: " + baseline.ToString());
+    //     Debug.Log("> Max Baseline Reading: " + maxBaselineReading.ToString());
+    //     Debug.Log("> UpperThreshold: " + UpperThreshold.ToString());
+    //     Debug.Log("> LowerThreshold: " + LowerThreshold.ToString());
 
-        // Wait for a second
-        yield return new WaitForSeconds(1.0f);
-        isCalibrating = false;
-        // Trigger Calibration Complete Event
-        EventManager.Trigger("CalibrationComplete");
-        // Deactivate Calibration Screen
-        CalibrationUI.CalibrationScreen.SetActive(false);
+    //     // Wait for a second
+    //     yield return new WaitForSeconds(1.0f);
+    //     isCalibrating = false;
+    //     // Trigger Calibration Complete Event
+    //     EventManager.Trigger("CalibrationComplete");
+    //     // Deactivate Calibration Screen
+    //     CalibrationUI.CalibrationScreen.SetActive(false);
         
         
-        yield return new WaitForSeconds(3.0f);
+    //     yield return new WaitForSeconds(3.0f);
         
-        yield break;
-    }
+    //     yield break;
+    // }
 }

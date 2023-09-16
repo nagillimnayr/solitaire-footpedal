@@ -136,8 +136,8 @@ public class InputManager : MonoBehaviour
         }
 
         // Process Keyboard input
-        // Dont process input from the keyboard if a card is currently being held
-        // Dont process input from keyboard if win screen is showing
+        // Don't process input from the keyboard if a card is currently being held
+        // Don't process input from keyboard if win screen is showing
         if (Input.anyKeyDown && carryStack.Count == 0 && !LogicManager.isWon) 
         {
             ProcessKeyboardInput();
